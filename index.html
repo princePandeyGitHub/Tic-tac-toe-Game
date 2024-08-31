@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Here We are creating a Tic tac toe game</title>
+</head>
+<style>
+    * {
+        margin: 0px;
+        padding: 0px;
+    }
+    h1 {
+        text-align: center;
+        margin-top: 2%;
+    }
+    #board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px); /* Adjust width as needed */
+            grid-gap: 0.5%; /* Adjust gap between cells as needed */
+            justify-content: center;
+            margin-top: 2%;
+    }
+    .cells {
+            width: 100px; /* Adjust width of cells as needed */
+            height: 100px; /* Adjust height of cells as needed */
+            text-align: center;
+            font-size: 24px;
+            border: 1px solid black;
+            cursor: pointer;
+            text-align: center;
+    }
+    .cells input {
+        height: 100%;
+        width: 100%;
+        font-weight: bold;
+        font-size: 4rem;
+        text-align: center;
+    }
+    #congrats {
+        background-color: black;
+        color: white;
+        font-weight: bolder;
+        display: 'none';
+        font-size: x-large;
+        text-align: center;
+    }
+</style>
+<body>
+    <h1>Tic Tac Toe</h1>
+    <div id="board">
+        <div class="cells">
+            <input type="text" name="" id="cell-1" class="inputs" onclick="cellclick(this)">
+        </div>
+        <div class="cells">
+            <input type="text" name="" id="cell-2" class="inputs" onclick="cellclick(this)">
+        </div>
+        <div class="cells">
+            <input type="text" name="" id="cell-3" class="inputs" onclick="cellclick(this)">
+        </div>
+        <div class="cells">
+            <input type="text" name="" id="cell-4" class="inputs" onclick="cellclick(this)">
+        </div>
+        <div class="cells">
+            <input type="text" name="" id="cell-5" class="inputs" onclick="cellclick(this)">
+        </div>
+        <div class="cells">
+            <input type="text" name="" id="cell-6" class="inputs" onclick="cellclick(this)">
+        </div>
+        <div class="cells">
+            <input type="text" name="" id="cell-7" class="inputs" onclick="cellclick(this)">
+        </div>
+        <div class="cells">
+            <input type="text" name="" id="cell-8" class="inputs" onclick="cellclick(this)">
+        </div>
+        <div class="cells">
+            <input type="text" name="" id="cell-9" class="inputs" onclick="cellclick(this)">
+        </div>
+    </div>
+    <div id="congrats">
+
+    </div>
+    <script>
+        let board = document.getElementById('board');
+        let congrats = document.getElementById('congrats')
+        let cell_1_value = document.getElementById('cell-1');
+        let cell_2_value = document.getElementById('cell-2');
+        let cell_3_value = document.getElementById('cell-3');
+        let cell_4_value = document.getElementById('cell-4');
+        let cell_5_value = document.getElementById('cell-5');
+        let cell_6_value = document.getElementById('cell-6');
+        let cell_7_value = document.getElementById('cell-7');
+        let cell_8_value = document.getElementById('cell-8');
+        let cell_9_value = document.getElementById('cell-9');
+        let currentplayer = 'X';
+        function cellclick(cell) {
+            if(!cell.value) {
+                cell.value = currentplayer;
+                cell.disabled = true;
+                if(currentplayer === 'X') {
+                    currentplayer = '0';
+                }
+                else if(currentplayer === '0') {
+                    currentplayer = 'X';
+                }
+                if(checkwin() === true) {
+                    if(currentplayer === '0') {
+                        currentplayer = 'X'
+                    }
+                    else if (currentplayer === 'X') {
+                        currentplayer = '0';
+                    }
+                    console.log('someone has won the game')
+                    board.style.display = 'none';
+                    congrats.style.display = 'block';
+                    congrats.innerHTML = 'Player '+currentplayer+' has won this Game \n refresh the page to restart.'
+                }
+                else if(checkDraw() === true) {
+                    board.style.display = 'none';
+                    congrats.style.display = 'block'
+                    congrats.innerHTML = 'No one have won the Game refresh the page for restart the Game'
+                }
+            }
+        }
+        function checkwin() {
+    // Define all possible winning combinations
+    const winningCombos = [
+        [cell_1_value.value, cell_2_value.value, cell_3_value.value],
+        [cell_4_value.value, cell_5_value.value, cell_6_value.value],
+        [cell_7_value.value, cell_8_value.value, cell_9_value.value],
+        [cell_1_value.value, cell_4_value.value, cell_7_value.value],
+        [cell_2_value.value, cell_5_value.value, cell_8_value.value],
+        [cell_3_value.value, cell_6_value.value, cell_9_value.value],
+        [cell_1_value.value, cell_5_value.value, cell_9_value.value],
+        [cell_3_value.value, cell_5_value.value, cell_7_value.value],
+    ];
+
+    for (const combo of winningCombos) {
+        const [a, b, c] = combo;
+        if (a !== '' && a === b && a === c) {
+            return true; // Return true if someone has won
+        }
+    }
+    
+    return false; // Return false if no one has won yet
+}
+function checkDraw() {
+    for (let i = 1; i <= 9; i++) {
+        const cell = document.getElementById(`cell-${i}`);
+        if (!cell.value) {
+            // If any cell is empty, the game is not a draw
+            return false;
+        }
+    }
+    // If all cells are filled and no player has won, it's a draw
+    return true;
+}
+
+
+    </script>
+</body>
+</html>
